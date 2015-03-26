@@ -1056,7 +1056,7 @@ function load_estimate_data (feature)
 		var lat = parseFloat (estimate.est_latitude);
 
 		if (!lon || !lat) {
-			alert ('bad coords');
+			// alert ('bad coords');
 			return;
 		}
 
