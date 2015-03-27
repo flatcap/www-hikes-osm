@@ -1,10 +1,10 @@
-div.menu {
+p.menu {
 	margin: 0;
 	padding: 0;
 	z-index: 10;
 }
 
-div.menu span {
+p.menu span {
 	float: left;
 	width: 8em;
 	font-size: 120%;
@@ -20,11 +20,11 @@ div.menu span {
 	-webkit-border-radius: 15px;
 }
 
-div.menu a {
+p.menu a {
 	text-decoration: none;
 }
 
-div.menu span.active {
+p.menu span.active {
 	background: #00f;
 }
 
