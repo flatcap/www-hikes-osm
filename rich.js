@@ -903,10 +903,10 @@ function show_rich (feature, layer)
 
 	// output += '<h2>Where's Rich?</h2>';
 
-	output += 'blah<br>';
-	output += 'blah<br>';
-	output += 'blah<br>';
-	output += 'blah<br>';
+	// output += 'blah<br>';
+	// output += 'blah<br>';
+	// output += 'blah<br>';
+	// output += 'blah<br>';
 
 	// output += get_bold_name   (feature);
 	// output += get_text        (feature, 'description');
