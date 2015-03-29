@@ -123,7 +123,7 @@ function set_defaults()
 	layers.icon_ferry   .setVisible (true);
 	layers.icon_hotel   .setVisible (true);
 	layers.icon_hut     .setVisible (true);
-	layers.icon_rich    .setVisible (false);
+	layers.icon_rich    .setVisible (true);
 	layers.icon_start   .setVisible (true);
 	layers.icon_tent    .setVisible (true);
 	layers.icon_waves   .setVisible (true);
