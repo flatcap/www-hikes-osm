@@ -46,9 +46,12 @@ var item_info;
 
 function route_sort (a, b)
 {
-	if (a.name_short > b.name_short) {
+	var aname = a.name_short || a.name;
+	var bname = b.name_short || b.name;
+
+	if (aname > bname) {
 		return 1;
-	} else if (a.name_short < b.name_short) {
+	} else if (aname < bname) {
 		return -1;
 	} else {
 		return 0;
