@@ -1,4 +1,20 @@
+# other sources
 /gfx
 /output
+
+# script generated
 /rich.json
 /estimate.json
+
+# externally generated
+calendar-camp.html
+calendar-hike.html
+calendar.css
+graph-camp-small.png
+graph-camp.png
+graph-hike-small.png
+graph-hike.png
+graph-length-small.png
+graph-length.png
+stats.css
+stats.html
