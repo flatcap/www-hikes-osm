@@ -1046,53 +1046,26 @@ function on_map_click (evt)
 
 function on_mouse_move(evt)
 {
-	var pixel = map.getEventPixel (evt.originalEvent);
-	var hit = false;
-
-	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
-		var tag = feature.get ('tag');
-		if (tag == 'hull') {
-			return true;
-		}
-
-		hit = true;
-
-		var type = feature.get ('type');
-		var text = feature.get ('cache');
-
-		if (!text) {
-			if (type == 'area') {
-				text = show_area (feature);
-			} else if (type == 'icon') {
-				text = show_icon (feature, layer);
-			} else if (type == 'line') {
-				text = show_line (feature);
-			} else if (type == 'peak') {
-				text = show_peak (feature);
-			} else if (type == 'rich') {
-				text = show_rich (feature, layer);
-			} // XXX else alert
-
-			feature.set ('cache', text);
-		}
-
-		if (text) {
-			item_info.html (text);
-		}
-
-		var coords = feature.get('coords') || '';
-		$('#ll').html(coords);
-
-		return true;
-	});
+	var fl = get_event_feature_layer (evt);
+	var feature = fl[0];
+	var layer   = fl[1];
 
 	var t = $('#map')[0];
-	if (hit) {
+	if (feature) {
 		t.style.cursor = 'pointer';
 	} else {
 		t.style.cursor = '';
 		// item_info.html ('');
+		return;
 	}
+
+	var text = get_feature_text (feature, layer);
+	if (text) {
+		item_info.html (text);
+	}
+
+	var coords = feature.get('coords') || '';
+	$('#ll').html(coords);
 }
 
 function on_window_resize()
