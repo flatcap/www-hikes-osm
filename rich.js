@@ -42,7 +42,7 @@ var uk_hull;
 var route_info;
 var item_info;
 
-var mouse_mode = 1;		// 1: click, 2: hover
+var mouse_mode = 0;		// 1: click, 2: hover
 
 //------------------------------------------------------------------------------
 
@@ -1063,10 +1063,10 @@ function set_popup (coords)
 
 function on_map_click (evt)
 {
-	// if (mouse_mode == 2) {	// hover
-	// 	return;
-	// }
-	// mouse_mode = 1;		// click
+	if (mouse_mode == 2) {	// hover
+		return;
+	}
+	mouse_mode = 1;		// click
 
 	set_popup (evt.originalEvent);
 	return;
@@ -1108,15 +1108,15 @@ function on_map_click (evt)
 
 function on_mouse_move(evt)
 {
-	// if (mouse_mode == 1) {	// click
-	// 	return;
-	// }
-	// mouse_mode = 2;		// hover
+	if (mouse_mode == 1) {	// click
+		return;
+	}
+	mouse_mode = 2;		// hover
 
 	// var y = map.getEventPixel (evt);
 	// console.log ("move");
 	// console.log(y);
-	// set_popup (evt);
+	set_popup (evt);
 	return;
 
 	var fl = get_event_feature_layer (evt);
