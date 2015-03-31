@@ -69,6 +69,10 @@ hr {
 	clear: both;
 }
 
+div.format {
+	min-width: 18em;
+}
+
 div.format > span {
 	display: block;
 	width: 7em;
@@ -80,11 +84,6 @@ div.format > span {
 span.climbed {
 	font-size: 110%;
 	color: green;
-}
-
-#item span {
-	font-weight: bold;
-	font-size: 90%;
 }
 
 #ll {

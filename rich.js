@@ -973,17 +973,75 @@ function on_click_hike()
 	}
 }
 
+
+function get_event_feature_layer (evt)
+{
+	if (!evt) {
+		return;
+	}
+
+	var pixel = map.getEventPixel (evt.originalEvent);
+	var f;
+	var l;
+
+	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
+		f = feature;
+		l = layer;
+		return false;
+	});
+
+	return [f,l];
+}
+
+function get_feature_text (feature, layer)
+{
+	if (!feature) {
+		return '';
+	}
+
+	var type = feature.get ('type');
+	var text = feature.get ('cache');
+
+	if (!text) {
+		if (type == 'area') {
+			text = show_area (feature);
+		} else if (type == 'icon') {
+			text = show_icon (feature, layer);
+		} else if (type == 'line') {
+			text = show_line (feature);
+		} else if (type == 'peak') {
+			text = show_peak (feature);
+		} else if (type == 'rich') {
+			text = show_rich (feature, layer);
+		} // XXX else alert
+
+		feature.set ('cache', text);
+	}
+
+	if (text) {
+		item_info.html (text);
+	}
+
+	return text;
+}
+
 function on_map_click (evt)
 {
 	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
 	$('#ll').html(str);
 
-	var coordinate = evt.coordinate;
-	var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326'));
+	var fl = get_event_feature_layer (evt);
+	var feature = fl[0];
+	var layer   = fl[1];
 
-	content.innerHTML = '<p>You&nbsp;clicked&nbsp;here:</p><code>' + hdms + '</code>';
-	overlay.setPosition(coordinate);
+	if (feature) {
+		content.innerHTML = get_feature_text (feature, layer);
+		overlay.setPosition(evt.coordinate);
+	} else {
+		overlay.setPosition(undefined);
+		closer.blur();
+	}
 }
 
 function on_mouse_move(evt)
