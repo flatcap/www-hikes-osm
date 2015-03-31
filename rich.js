@@ -1055,7 +1055,8 @@ function on_map_click (evt)
 
 	if (feature) {
 		content.innerHTML = get_feature_text (feature, layer);
-		// overlay.setPosition(evt.coordinate);
+		overlay.setPosition(evt.coordinate);
+		return;
 
 		console.log (' ');
 		console.log ('feature');
@@ -1094,8 +1095,11 @@ function on_mouse_move(evt)
 		return;
 	}
 
-	var x = map.getCoordinateFromPixel ([evt.clientX, evt.clientY]);
+	var y = map.getEventPixel (evt);
+	var x = map.getCoordinateFromPixel (y);
 	console.log (x);
+	evt.coordinate = x;
+	on_map_click (evt);
 
 	// var fcoord = feature.get('coords') || '';
 	// var farr = fcoord.split (',');
