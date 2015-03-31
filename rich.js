@@ -42,14 +42,16 @@ var uk_hull;
 var route_info;
 var item_info;
 
+var mouse_mode = 0;		// 1: click, 2: hover
+
 //------------------------------------------------------------------------------
 
-var container = document.getElementById('popup');
-var content   = document.getElementById('popup-content');
-var closer    = document.getElementById('popup-closer');
+var container = document.getElementById ('popup');
+var content   = document.getElementById ('popup-content');
+var closer    = document.getElementById ('popup-closer');
 
 closer.onclick = function() {
-	overlay.setPosition(undefined);
+	overlay.setPosition (undefined);
 	closer.blur();
 	return false;
 };
@@ -92,7 +94,7 @@ function format_date (datestr)
 
 Date.prototype.diff = function (str)
 {
-	var d = new Date(str);
+	var d = new Date (str);
 
 	return Math.floor ((this - d) / 86400000);
 };
@@ -362,7 +364,7 @@ function show_route_info (dir)
 	if (r.dist_route) {
 		output += html_distance (r, true);
 	} else {
-		output += html_peaks (r);
+		output += html_peaks(r);
 	}
 
 	var start = r.date_start;
@@ -408,7 +410,7 @@ function get_line_title (feature)
 		return '';
 	}
 
-	var tag = feature.get('tag');
+	var tag = feature.get ('tag');
 	if (!tag) {
 		return '';
 	}
@@ -543,21 +545,21 @@ function get_bold_name (feature)
 	}
 
 	var str = '';
-	var tag = feature.get('tag');
+	var tag = feature.get ('tag');
 	if (tag == 'start') {
 		str = 'Start of the ';
 	} else if (tag == 'end') {
 		str = 'End of the ';
 	}
 
-	var name = feature.get('name');
+	var name = feature.get ('name');
 	if (!name) {
 		return '';
 	}
 
 	str += name;
 
-	var where = feature.get('where');
+	var where = feature.get ('where');
 	if (where) {
 		str += ' - ' + where;
 	}
@@ -572,15 +574,15 @@ function get_location (feature, title)
 		return '';
 	}
 
-	var tag = feature.get('tag');
+	var tag = feature.get ('tag');
 	if ((tag == 'ferry') || (tag == 'waves')) {
 		return '';
 	}
 
 	var str    = '';
-	var coords = feature.get('coords');
-	var elev   = feature.get('elevation');
-	var gr     = feature.get('gridref');
+	var coords = feature.get ('coords');
+	var elev   = feature.get ('elevation');
+	var gr     = feature.get ('gridref');
 
 	if (gr) {
 		str += gr;
@@ -588,7 +590,7 @@ function get_location (feature, title)
 		str += coords;
 	}
 
-	var type = feature.get('type');
+	var type = feature.get ('type');
 	if (elev && (type != 'peak') && str) {
 		str += ' (' + elev + 'm)';
 	}
@@ -613,7 +615,7 @@ function get_height (feature)
 		return '';
 	}
 
-	var elev = feature.get('elevation');
+	var elev = feature.get ('elevation');
 	if (!elev) {
 		return '';
 	}
@@ -633,7 +635,7 @@ function estimate_exists (feature)
 
 	var search = [ 'est_wp', 'est_percentage', 'est_latitude', 'est_longitude' ];
 	for (var x in search) {
-		if (keys.indexOf(search[x]) < 0) {
+		if (keys.indexOf (search[x]) < 0) {
 			return false;
 		}
 	}
@@ -669,11 +671,11 @@ function create_message (feature)
 
 	var estimate = estimate_exists (feature);
 
-	var date_seen = feature.get('date_seen');
+	var date_seen = feature.get ('date_seen');
 	if (estimate) {
 		since = today;
 	} else {
-		since = new Date(date_seen);
+		since = new Date (date_seen);
 	}
 
 	message += '<h2>Rich';
@@ -695,20 +697,20 @@ function create_message (feature)
 		message += ')</span>';
 	}
 	message += '</h2>';
-	// alert(message);
+	// alert (message);
 
 	if (estimate) {
-		percentage = feature.get('est_percentage');
-		latitude   = feature.get('est_latitude');
-		longitude  = feature.get('est_longitude');
+		percentage = feature.get ('est_percentage');
+		latitude   = feature.get ('est_latitude');
+		longitude  = feature.get ('est_longitude');
 	} else {
-		percentage = feature.get('percentage');
-		latitude   = feature.get('latitude');
-		longitude  = feature.get('longitude');
+		percentage = feature.get ('percentage');
+		latitude   = feature.get ('latitude');
+		longitude  = feature.get ('longitude');
 	}
 
-	var route      = feature.get('route');
-	var date_route = feature.get('date_route');
+	var route      = feature.get ('route');
+	var date_route = feature.get ('date_route');
 
 	if (route) {
 		if (date_route) {
@@ -734,13 +736,13 @@ function create_message (feature)
 
 	//message += '<br>';
 
-	var date_bed = feature.get('date_bed');
+	var date_bed = feature.get ('date_bed');
 	elapsed = since.diff (date_bed);
 	if (elapsed > 7) {
 		message += 'Last saw a bed ' + elapsed + ' days ago.<br>';
 	}
 
-	var msg = feature.get('message');
+	var msg = feature.get ('message');
 	if (msg) {
 		message += '<b>&ldquo;' + msg + '&rdquo;</b><br>';
 	}
@@ -777,7 +779,7 @@ function show_area (feature)
 	output += '<ul>';
 	for (var i = 1; i < 10; i++) {
 		var key   = 'notes' + i;
-		var value = feature.get(key);
+		var value = feature.get (key);
 
 		if (!value) {
 			break;
@@ -974,25 +976,6 @@ function on_click_hike()
 }
 
 
-function get_event_feature_layer (evt)
-{
-	if (!evt) {
-		return;
-	}
-
-	var pixel = map.getEventPixel (evt.originalEvent);
-	var f;
-	var l;
-
-	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
-		f = feature;
-		l = layer;
-		return false;
-	});
-
-	return [f,l];
-}
-
 function get_feature_text (feature, layer)
 {
 	if (!feature) {
@@ -1025,47 +1008,56 @@ function get_feature_text (feature, layer)
 	return text;
 }
 
-function on_map_click (evt)
+
+function set_popup (evt)
 {
-	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
-	$('#ll').html(str);
+	if (!evt) {
+		overlay.setPosition (undefined);
+		closer.blur();
+		return;
+	}
 
-	var fl = get_event_feature_layer (evt);
-	var feature = fl[0];
-	var layer   = fl[1];
+	var pixel = map.getEventPixel (evt);
+	var lonlat = map.getCoordinateFromPixel (pixel);
 
-	if (feature) {
-		content.innerHTML = get_feature_text (feature, layer);
-		overlay.setPosition(evt.coordinate);
+	var text;
+	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
+		text = get_feature_text (feature, layer);
+		return false;
+	});
+
+	var ll = ol.proj.transform (lonlat, 'EPSG:3857', 'EPSG:4326');
+	var llstr = ll[0].toFixed(6) + ', ' + ll[1].toFixed(6);
+	$('#ll').html (llstr);
+
+	if (text) {
+		content.innerHTML = text;
+		overlay.setPosition (lonlat);
 	} else {
-		overlay.setPosition(undefined);
+		content.innerHTML = text;
+		overlay.setPosition (undefined);
 		closer.blur();
 	}
 }
 
-function on_mouse_move(evt)
+function on_map_click (evt)
 {
-	var fl = get_event_feature_layer (evt);
-	var feature = fl[0];
-	var layer   = fl[1];
-
-	var t = $('#map')[0];
-	if (feature) {
-		t.style.cursor = 'pointer';
-	} else {
-		t.style.cursor = '';
-		// item_info.html ('');
+	if (mouse_mode == 2) {	// hover
 		return;
 	}
+	mouse_mode = 1;		// click
 
-	var text = get_feature_text (feature, layer);
-	if (text) {
-		item_info.html (text);
+	set_popup (evt.originalEvent);
+}
+
+function on_mouse_move (evt)
+{
+	if (mouse_mode == 1) {	// click
+		return;
 	}
+	mouse_mode = 2;		// hover
 
-	var coords = feature.get('coords') || '';
-	$('#ll').html(coords);
+	set_popup (evt);
 }
 
 function on_window_resize()
@@ -1117,10 +1109,10 @@ function load_estimate_data (feature)
 		}
 
 		pt = [lon, lat];
-		// alert(pt);
+		// alert (pt);
 
 		var f = new ol.Feature({
-			geometry: new ol.geom.Point(ol.proj.transform(pt, 'EPSG:4326', 'EPSG:3857'))
+			geometry: new ol.geom.Point (ol.proj.transform (pt, 'EPSG:4326', 'EPSG:3857'))
 		});
 
 		var keys = feature.getKeys();
@@ -1129,7 +1121,7 @@ function load_estimate_data (feature)
 				return true;
 			}
 			// Transfer all the json data from the rich feature
-			f.set (name, feature.get(name));
+			f.set (name, feature.get (name));
 		});
 
 		f.set ('type', 'rich');
@@ -1189,7 +1181,7 @@ function load_kml (route)
 
 				var name;
 				if (layer == layers.extra) {
-					var s = feature.get('style');
+					var s = feature.get ('style');
 					if (s) {
 						var style = icons[s];
 						if (style) {
@@ -1198,7 +1190,7 @@ function load_kml (route)
 					}
 				}
 				if (type == 'icon') {
-					name = feature.get('name');
+					name = feature.get ('name');
 					if (name == 'Camp site') {
 						clone.setStyle (icons.site);
 					}
@@ -1237,7 +1229,7 @@ function load_rich_data()
 		pt = [lon, lat];
 
 		var f = new ol.Feature({
-			geometry: new ol.geom.Point(ol.proj.transform(pt, 'EPSG:4326', 'EPSG:3857'))
+			geometry: new ol.geom.Point (ol.proj.transform (pt, 'EPSG:4326', 'EPSG:3857'))
 		});
 
 		$.each (rich, function (name, value) {
@@ -1408,7 +1400,7 @@ function init_events()
 	$('#dropdown').click (on_click_hike);
 
 	$(map.getViewport()).on ('mousemove', on_mouse_move);
-	map.on('click', on_map_click);
+	map.on ('click', on_map_click);
 	$(window).on ('resize', on_window_resize);
 }
 
