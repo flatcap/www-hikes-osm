@@ -1025,11 +1025,29 @@ function get_feature_text (feature, layer)
 	return text;
 }
 
+
+function set_popup (coords, text)
+{
+	if (!coords || !text) {
+		overlay.setPosition(undefined);
+		closer.blur();
+		return;
+	}
+
+	content.innerHTML = text;
+	overlay.setPosition(coords);
+}
+
 function on_map_click (evt)
 {
 	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
 	$('#ll').html(str);
+	console.log ('event');
+	console.log (evt.coordinate);
+	console.log (coords);
+	var e2 = ol.proj.transform(coords, 'EPSG:4326', 'EPSG:3857');
+	console.log (e2);
 
 	var fl = get_event_feature_layer (evt);
 	var feature = fl[0];
@@ -1037,7 +1055,24 @@ function on_map_click (evt)
 
 	if (feature) {
 		content.innerHTML = get_feature_text (feature, layer);
-		overlay.setPosition(evt.coordinate);
+		// overlay.setPosition(evt.coordinate);
+
+		console.log (' ');
+		console.log ('feature');
+
+		var fcoord = feature.get('coords') || '';
+		var farr = fcoord.split (',');
+		farr[0] = parseFloat (farr[0]);
+		farr[1] = parseFloat (farr[1]);
+		console.log (farr);
+
+		var world = ol.proj.transform(farr, 'EPSG:4326', 'EPSG:3857');
+		console.log (world);
+
+		var back = ol.proj.transform(world, 'EPSG:3857', 'EPSG:4326');
+		console.log (back);
+
+		overlay.setPosition(world);
 	} else {
 		overlay.setPosition(undefined);
 		closer.blur();
@@ -1058,6 +1093,20 @@ function on_mouse_move(evt)
 		// item_info.html ('');
 		return;
 	}
+
+	var x = map.getCoordinateFromPixel ([evt.clientX, evt.clientY]);
+	console.log (x);
+
+	// var fcoord = feature.get('coords') || '';
+	// var farr = fcoord.split (',');
+	// farr[0] = parseFloat (farr[0]);
+	// farr[1] = parseFloat (farr[1]);
+	// console.log (farr);
+
+	// var world = ol.proj.transform(farr, 'EPSG:4326', 'EPSG:3857');
+	// console.log (world);
+	// evt.coordinate = world;
+	// on_map_click (evt);
 
 	var text = get_feature_text (feature, layer);
 	if (text) {
