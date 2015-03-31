@@ -44,6 +44,22 @@ var item_info;
 
 //------------------------------------------------------------------------------
 
+var container = document.getElementById('popup');
+var content   = document.getElementById('popup-content');
+var closer    = document.getElementById('popup-closer');
+
+closer.onclick = function() {
+	overlay.setPosition(undefined);
+	closer.blur();
+	return false;
+};
+
+var overlay = new ol.Overlay({
+	element: container
+});
+
+//------------------------------------------------------------------------------
+
 function route_sort (a, b)
 {
 	var aname = a.name_short || a.name;
@@ -957,62 +973,99 @@ function on_click_hike()
 	}
 }
 
+
+function get_event_feature_layer (evt)
+{
+	if (!evt) {
+		return;
+	}
+
+	var pixel = map.getEventPixel (evt.originalEvent);
+	var f;
+	var l;
+
+	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
+		f = feature;
+		l = layer;
+		return false;
+	});
+
+	return [f,l];
+}
+
+function get_feature_text (feature, layer)
+{
+	if (!feature) {
+		return '';
+	}
+
+	var type = feature.get ('type');
+	var text = feature.get ('cache');
+
+	if (!text) {
+		if (type == 'area') {
+			text = show_area (feature);
+		} else if (type == 'icon') {
+			text = show_icon (feature, layer);
+		} else if (type == 'line') {
+			text = show_line (feature);
+		} else if (type == 'peak') {
+			text = show_peak (feature);
+		} else if (type == 'rich') {
+			text = show_rich (feature, layer);
+		} // XXX else alert
+
+		feature.set ('cache', text);
+	}
+
+	if (text) {
+		item_info.html (text);
+	}
+
+	return text;
+}
+
 function on_map_click (evt)
 {
 	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
 	$('#ll').html(str);
+
+	var fl = get_event_feature_layer (evt);
+	var feature = fl[0];
+	var layer   = fl[1];
+
+	if (feature) {
+		content.innerHTML = get_feature_text (feature, layer);
+		overlay.setPosition(evt.coordinate);
+	} else {
+		overlay.setPosition(undefined);
+		closer.blur();
+	}
 }
 
 function on_mouse_move(evt)
 {
-	var pixel = map.getEventPixel (evt.originalEvent);
-	var hit = false;
-
-	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
-		var tag = feature.get ('tag');
-		if (tag == 'hull') {
-			return true;
-		}
-
-		hit = true;
-
-		var type = feature.get ('type');
-		var text = feature.get ('cache');
-
-		if (!text) {
-			if (type == 'area') {
-				text = show_area (feature);
-			} else if (type == 'icon') {
-				text = show_icon (feature, layer);
-			} else if (type == 'line') {
-				text = show_line (feature);
-			} else if (type == 'peak') {
-				text = show_peak (feature);
-			} else if (type == 'rich') {
-				text = show_rich (feature, layer);
-			} // XXX else alert
-
-			feature.set ('cache', text);
-		}
-
-		if (text) {
-			item_info.html (text);
-		}
-
-		var coords = feature.get('coords') || '';
-		$('#ll').html(coords);
-
-		return true;
-	});
+	var fl = get_event_feature_layer (evt);
+	var feature = fl[0];
+	var layer   = fl[1];
 
 	var t = $('#map')[0];
-	if (hit) {
+	if (feature) {
 		t.style.cursor = 'pointer';
 	} else {
 		t.style.cursor = '';
 		// item_info.html ('');
+		return;
 	}
+
+	var text = get_feature_text (feature, layer);
+	if (text) {
+		item_info.html (text);
+	}
+
+	var coords = feature.get('coords') || '';
+	$('#ll').html(coords);
 }
 
 function on_window_resize()
@@ -1627,6 +1680,7 @@ function init_map()
 		controls: ol.control.defaults().extend ([
 			new ol.control.FullScreen()
 		]),
+		overlays: [ overlay ],
 	});
 }
 

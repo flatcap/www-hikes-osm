@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="map.css" />
 		<link rel="stylesheet" type="text/css" href="rich.css" />
 		<link rel="stylesheet" type="text/css" href="menu.css" />
+		<link rel="stylesheet" type="text/css" href="dialog.css" />
 		<link rel="stylesheet" type="text/css" href="popup.css" />
 
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
@@ -37,7 +38,12 @@
 			<a href="calendar-camp.html"><span>Camp Calendar</span></a>
 		</p>
 
-		<div id="map" class="ui-layout-center" tabindex="0"> </div>
+		<div id="map" class="ui-layout-center" tabindex="0">
+			<div id="popup" class="ol-popup">
+				<a href="#" id="popup-closer" class="ol-popup-closer">&#9746;</a>
+				<div id="popup-content"></div>
+			</div>
+		</div>
 
 		<div class="options ui-layout-east">
 			<div>
