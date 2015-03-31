@@ -44,6 +44,22 @@ var item_info;
 
 //------------------------------------------------------------------------------
 
+var container = document.getElementById('popup');
+var content   = document.getElementById('popup-content');
+var closer    = document.getElementById('popup-closer');
+
+closer.onclick = function() {
+	overlay.setPosition(undefined);
+	closer.blur();
+	return false;
+};
+
+var overlay = new ol.Overlay({
+	element: container
+});
+
+//------------------------------------------------------------------------------
+
 function route_sort (a, b)
 {
 	var aname = a.name_short || a.name;
@@ -962,6 +978,12 @@ function on_map_click (evt)
 	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
 	$('#ll').html(str);
+
+	var coordinate = evt.coordinate;
+	var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+	content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+	overlay.setPosition(coordinate);
 }
 
 function on_mouse_move(evt)
@@ -1627,6 +1649,7 @@ function init_map()
 		controls: ol.control.defaults().extend ([
 			new ol.control.FullScreen()
 		]),
+		overlays: [ overlay ],
 	});
 }
 
