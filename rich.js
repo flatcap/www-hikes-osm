@@ -42,6 +42,8 @@ var uk_hull;
 var route_info;
 var item_info;
 
+var mouse_mode = 1;		// 1: click, 2: hover
+
 //------------------------------------------------------------------------------
 
 var container = document.getElementById('popup');
@@ -983,6 +985,8 @@ function get_event_feature_layer (evt)
 	var pixel = map.getEventPixel (evt.originalEvent);
 	var f;
 	var l;
+	console.log ('get_event_feature_layer');
+	console.log (pixel);
 
 	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
 		f = feature;
@@ -1026,21 +1030,48 @@ function get_feature_text (feature, layer)
 }
 
 
-function set_popup (coords, text)
+function set_popup (coords)
 {
-	if (!coords || !text) {
+	if (!coords) {
 		overlay.setPosition(undefined);
 		closer.blur();
 		return;
 	}
 
-	content.innerHTML = text;
-	overlay.setPosition(coords);
+	var pixel = map.getEventPixel (coords);
+	var text;
+
+	// console.log (pixel);
+	var c = map.getCoordinateFromPixel (pixel);
+	// console.log (c);
+	// return;
+
+	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
+		text = get_feature_text (feature, layer);
+		return false;
+	});
+
+	if (text) {
+		content.innerHTML = text;
+		overlay.setPosition (c);
+	} else {
+		content.innerHTML = text;
+		overlay.setPosition (undefined);
+		closer.blur();
+	}
 }
 
 function on_map_click (evt)
 {
-	var coords = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+	// if (mouse_mode == 2) {	// hover
+	// 	return;
+	// }
+	// mouse_mode = 1;		// click
+
+	set_popup (evt.originalEvent);
+	return;
+
+	var coords = ol.proj.transform (evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	var str = coords[0].toFixed(6) + ', ' + coords[1].toFixed(6);
 	$('#ll').html(str);
 	var e2 = ol.proj.transform(coords, 'EPSG:4326', 'EPSG:3857');
@@ -1050,6 +1081,11 @@ function on_map_click (evt)
 	var layer   = fl[1];
 
 	if (feature) {
+		var y = map.getEventPixel (evt.originalEvent);
+		console.log ('click');
+		console.log(y);
+		return;
+
 		content.innerHTML = get_feature_text (feature, layer);
 		overlay.setPosition(evt.coordinate);
 		return;
@@ -1072,6 +1108,17 @@ function on_map_click (evt)
 
 function on_mouse_move(evt)
 {
+	// if (mouse_mode == 1) {	// click
+	// 	return;
+	// }
+	// mouse_mode = 2;		// hover
+
+	// var y = map.getEventPixel (evt);
+	// console.log ("move");
+	// console.log(y);
+	// set_popup (evt);
+	return;
+
 	var fl = get_event_feature_layer (evt);
 	var feature = fl[0];
 	var layer   = fl[1];
@@ -1086,8 +1133,14 @@ function on_mouse_move(evt)
 	}
 
 	var y = map.getEventPixel (evt);
+	console.log ('y');
+	console.log (y);
 	var x = map.getCoordinateFromPixel (y);
+	console.log ('x');
+	console.log (x);
 	var z = map.getEventCoordinate (evt);
+	console.log ('z');
+	console.log (z);
 	evt.coordinate = x;
 	on_map_click (evt);
 
