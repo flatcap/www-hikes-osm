@@ -1023,7 +1023,7 @@ function set_popup (evt)
 	var text;
 	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
 		text = get_feature_text (feature, layer);
-		return false;
+		return true;
 	});
 
 	var ll = ol.proj.transform (lonlat, 'EPSG:3857', 'EPSG:4326');
