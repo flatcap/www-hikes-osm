@@ -767,6 +767,7 @@ function show_area (feature)
 	}
 
 	var output = '';
+	output += '<div class="format">';
 
 	output += get_bold_name (feature);
 
@@ -788,6 +789,7 @@ function show_area (feature)
 
 	}
 	output += '</ul>';
+	output += '</div>';
 
 	return output;
 }
@@ -908,6 +910,7 @@ function show_rich (feature, layer)
 	var z = y.getSrc();
 	var s = y.getSize();
 
+	output += '<div class="format">';
 	output += '<div style="' +
 		' padding-left: ' + (s[0]+3) + 'px;' +
 		' background-image: url(\'' + z + '\');' +
@@ -932,6 +935,7 @@ function show_rich (feature, layer)
 	// output += get_location    (feature);
 	// output += get_id2         (feature, 'Icon');
 
+	output += '</div>';
 	output += '</div>';
 
 	return output;
@@ -974,7 +978,6 @@ function on_click_hike()
 		map_zoom_route (option);
 	}
 }
-
 
 function get_feature_text (feature, layer)
 {
