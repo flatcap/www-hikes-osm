@@ -8,7 +8,7 @@ p.menu span {
 	float: left;
 	width: 8em;
 	font-size: 120%;
-	background: #006;
+	background: #040;
 	color: #fff;
 	padding: 0.5em;
 	border: 3px solid #fff;
@@ -25,6 +25,7 @@ p.menu a {
 }
 
 p.menu span.active {
-	background: #00f;
+	background: #6d6;
+	color: #000;
 }
 
