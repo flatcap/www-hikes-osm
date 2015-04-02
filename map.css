@@ -1,5 +1,5 @@
 
-#map {
+.map {
 	background-color: gray;
 	height: 500px;
 	width: 900px;
@@ -8,5 +8,25 @@
 
 .ol-rotate {
 	margin-top: 2em;
+}
+
+.map:-moz-full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+.map:-webkit-full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+.map:-ms-fullscreen {
+	width: 100%;
+	height: 100%;
+}
+
+.map:full-screen {
+	width: 100%;
+	height: 100%;
 }
 
