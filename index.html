@@ -1,4 +1,7 @@
-<html>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,7 +24,7 @@
 		<link rel='icon' type='image/png' href='../gfx/favicon.png' />
 
 		<title>rich</title>
-		<script>
+		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -38,7 +41,7 @@
 			<a href="calendar-camp.html"><span>Camp Calendar</span></a>
 		</p>
 
-		<div id="map" class="ui-layout-center" tabindex="0">
+		<div id="map" class="ui-layout-center">
 			<div id="popup" class="ol-popup">
 				<a href="#" id="popup-closer" class="ol-popup-closer">&#9746;</a>
 				<div id="popup-content"></div>
@@ -74,61 +77,62 @@
 
 				<div id="tabs-1">
 					<h2>Map Type</h2>
-					<label><input type="radio" name="map_type" value="aerial" checked>Aerial</input></label>
-					<label><input type="radio" name="map_type" value="hybrid">Aerial with labels</input></label>
-					<label><input type="radio" name="map_type" value="street">Road map</input></label>
-					<label><input type="radio" name="map_type" value="os">Ordnance Survey</input></label>
-					<label><input type="radio" name="map_type" value="pastel">Pastel</input></label>
-					<label><input type="radio" name="map_type" value="toner">Toner</input></label>
-					<!-- <label><input type="radio" name="map_type" value="black">Black</input></label> -->
-					<label><input type="radio" name="map_type" value="off">Off</input></label>
+
+					<label><input type="radio" name="map_type" value="aerial" checked="checked" />Aerial</label>
+					<label><input type="radio" name="map_type" value="hybrid" />Aerial with labels</label>
+					<label><input type="radio" name="map_type" value="street" />Road map</label>
+					<label><input type="radio" name="map_type" value="os" />Ordnance Survey</label>
+					<label><input type="radio" name="map_type" value="pastel" />Pastel</label>
+					<label><input type="radio" name="map_type" value="toner" />Toner</label>
+					<!-- <label><input type="radio" name="map_type" value="black" />Black</label> -->
+					<label><input type="radio" name="map_type" value="off" />Off</label>
 					<h2>List</h2>
-					<label><input type="checkbox" id="show_comp">Completed</input></label>
-					<label><input type="checkbox" id="show_inco">Incomplete</input></label>
-					<label><input type="checkbox" id="show_unst">Unstarted</input></label>
-					<label><input type="checkbox" id="show_hill">Hills</input></label>
-					<label><input type="checkbox" id="show_join">Join-ups</input></label>
+					<label><input type="checkbox" id="show_comp" />Completed</label>
+					<label><input type="checkbox" id="show_inco" />Incomplete</label>
+					<label><input type="checkbox" id="show_unst" />Unstarted</label>
+					<label><input type="checkbox" id="show_hill" />Hills</label>
+					<label><input type="checkbox" id="show_join" />Join-ups</label>
 					<h2>List options</h2>
-					<label><input type="checkbox" id="opt_one">One route at a time</input></label>
-					<label><input type="checkbox" id="opt_zoom">Zoom in on route</input></label>
+					<label><input type="checkbox" id="opt_one" />One route at a time</label>
+					<label><input type="checkbox" id="opt_zoom" />Zoom in on route</label>
 				</div>
 
 				<div id="tabs-2">
 					<h2>Routes</h2>
-					<label><img src="gfx/dot_green.png"     width="20" height="20" /><input type="checkbox" id="line_hike"> <b>Hike</b> - route walked</input></label>
-					<label><img src="gfx/dot_blue.png"      width="20" height="20" /><input type="checkbox" id="line_river"> <b>River</b> - water crossed</input></label>
-					<label><img src="gfx/dot_red.png"       width="20" height="20" /><input type="checkbox" id="line_todo"> <b>To do</b> - route yet to be walked </input></label>
+					<label><img src="gfx/dot_green.png"     width="20" height="20" alt="hike"    /><input type="checkbox" id="line_hike" /> <b>Hike</b> - route walked</label>
+					<label><img src="gfx/dot_blue.png"      width="20" height="20" alt="river"   /><input type="checkbox" id="line_river" /> <b>River</b> - water crossed</label>
+					<label><img src="gfx/dot_red.png"       width="20" height="20" alt="todo"    /><input type="checkbox" id="line_todo" /> <b>To do</b> - route yet to be walked </label>
 					<br />
-					<label><img src="gfx/dot_purple.png"    width="20" height="20" /><input type="checkbox" id="line_route"> <b>Route</b> - the official path</input></label>
-					<label><img src="gfx/dot_yellow.png"    width="20" height="20" /><input type="checkbox" id="line_variant"> <b>Variant</b> - an alternate path</input></label>
+					<label><img src="gfx/dot_purple.png"    width="20" height="20" alt="route"   /><input type="checkbox" id="line_route" /> <b>Route</b> - the official path</label>
+					<label><img src="gfx/dot_yellow.png"    width="20" height="20" alt="variant" /><input type="checkbox" id="line_variant" /> <b>Variant</b> - an alternate path</label>
 					<br />
 					<h2>Areas</h2>
-					<label><img src="gfx/area_green.png"    width="20" height="20" /><input type="checkbox" id="area_done"> <b>Done</b> - Completed Area</input></label>
-					<label><img src="gfx/area_red.png"      width="20" height="20" /><input type="checkbox" id="area_todo"> <b>To do</b> - Area left to do</input></label>
-					<label><img src="gfx/area_yellow.png"   width="20" height="20" /><input type="checkbox" id="area_whole"> <b>Whole</b> - Entire Area of Interest</input></label>
+					<label><img src="gfx/area_green.png"    width="20" height="20" alt="done"    /><input type="checkbox" id="area_done" /> <b>Done</b> - Completed Area</label>
+					<label><img src="gfx/area_red.png"      width="20" height="20" alt="todo"    /><input type="checkbox" id="area_todo" /> <b>To do</b> - Area left to do</label>
+					<label><img src="gfx/area_yellow.png"   width="20" height="20" alt="whole"   /><input type="checkbox" id="area_whole" /> <b>Whole</b> - Entire Area of Interest</label>
 					<br />
 					<h2>Misc</h2>
-					<label><img src="gfx/icon_extra.png"    width="20" height="20" /><input type="checkbox" id="extra"> <b>Extras</b> - More route icons, etc</input></label>
+					<label><img src="gfx/icon_extra.png"    width="20" height="20" alt="extras"  /><input type="checkbox" id="extra" /> <b>Extras</b> - More route icons, etc</label>
 				</div>
 
 				<div id="tabs-3">
 					<h2>Nights</h2>
-					<label><img src="gfx/map_tent.png"      width="20" height="20" /><input type="checkbox" id="icon_tent"></input>Under canvas</label>
-					<label><img src="gfx/map_hut.png"       width="20" height="20" /><input type="checkbox" id="icon_hut"></input>In a bothy, barn, bird hide, etc</label>
-					<label><img src="gfx/map_hotel.png"     width="20" height="20" /><input type="checkbox" id="icon_hotel"></input>Under a roof</label>
+					<label><img src="gfx/map_tent.png"      width="20" height="20" alt="tent"  /><input type="checkbox" id="icon_tent" />Under canvas</label>
+					<label><img src="gfx/map_hut.png"       width="20" height="20" alt="hut"   /><input type="checkbox" id="icon_hut" />In a bothy, barn, bird hide, etc</label>
+					<label><img src="gfx/map_hotel.png"     width="20" height="20" alt="hotel" /><input type="checkbox" id="icon_hotel" />Under a roof</label>
 					<br />
 					<h2>Water Crossings</h2>
-					<label><img src="gfx/map_ferry.png"     width="20" height="20" /><input type="checkbox" id="icon_ferry"></input>In a boat</label>
-					<label><img src="gfx/map_waves.png"     width="20" height="20" /><input type="checkbox" id="icon_waves"></input>Getting my feet wet</label>
+					<label><img src="gfx/map_ferry.png"     width="20" height="20" alt="ferry" /><input type="checkbox" id="icon_ferry" />In a boat</label>
+					<label><img src="gfx/map_waves.png"     width="20" height="20" alt="waves" /><input type="checkbox" id="icon_waves" />Getting my feet wet</label>
 					<br />
 					<h2>Markers</h2>
-					<label><img src="gfx/paddle_start.png"  width="20" height="20" /><input type="checkbox" id="icon_start"></input>The start of a route</label>
-					<label><img src="gfx/paddle_end.png"    width="20" height="20" /><input type="checkbox" id="icon_end"></input>The end of a route</label>
-					<label><img src="gfx/r_green.png"       width="20" height="20" /><input type="checkbox" id="icon_rich"></input>Where's Rich?</label>
+					<label><img src="gfx/paddle_start.png"  width="20" height="20" alt="start" /><input type="checkbox" id="icon_start" />The start of a route</label>
+					<label><img src="gfx/paddle_end.png"    width="20" height="20" alt="end"   /><input type="checkbox" id="icon_end" />The end of a route</label>
+					<label><img src="gfx/r_green.png"       width="20" height="20" alt="rich"  /><input type="checkbox" id="icon_rich" />Where's Rich?</label>
 					<br />
 					<h2>Hills</h2>
-					<label><img src="gfx/diamond_green.png" width="20" height="20" /><input type="checkbox" id="peak_done"></input>Climbed</label>
-					<label><img src="gfx/diamond_red.png"   width="20" height="20" /><input type="checkbox" id="peak_todo"></input>Unclimbed</label>
+					<label><img src="gfx/diamond_green.png" width="20" height="20" alt="done"  /><input type="checkbox" id="peak_done" />Climbed</label>
+					<label><img src="gfx/diamond_red.png"   width="20" height="20" alt="todo"  /><input type="checkbox" id="peak_todo" />Unclimbed</label>
 				</div>
 
 			</div>
