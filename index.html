@@ -13,11 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="popup.css" />
 
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
-		<link rel="stylesheet" type="text/css" href="lib/layout-default.css" />
 
 		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-                <script type="text/javascript" src="lib/jquery.layout.js"> </script>
 		<script type="text/javascript" src="lib/ol.js"> </script>
 
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Fredoka+One" />
@@ -34,21 +32,21 @@
 		</script>
 	</head>
 	<body>
-		<p class="ui-layout-north menu">
+		<div class="menu">
 			<span class="active">Hike Map</span>
 			<a href="stats.html"><span>Statistics</span></a>
 			<a href="calendar-hike.html"><span>Hike Calendar</span></a>
 			<a href="calendar-camp.html"><span>Camp Calendar</span></a>
-		</p>
+		</div>
 
-		<div id="map" class="ui-layout-center">
+		<div id="map" class="map">
 			<div id="popup" class="ol-popup">
 				<a href="#" id="popup-closer" class="ol-popup-closer">&#9746;</a>
 				<div id="popup-content"></div>
 			</div>
 		</div>
 
-		<div class="options ui-layout-east">
+		<div class="options">
 			<div>
 				<input id="button_centre"  value="Centre Map" type="button" />
 				<input id="button_done"    value="All Done"   type="button" />

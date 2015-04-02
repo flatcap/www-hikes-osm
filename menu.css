@@ -1,17 +1,16 @@
-p.menu {
+div.menu {
 	margin: 0;
-	padding: 0;
+	padding: 0.7em;
 	z-index: 10;
+	background: #fff;
 }
 
-p.menu span {
-	float: left;
+div.menu span {
 	width: 8em;
 	font-size: 120%;
 	background: #040;
 	color: #fff;
-	padding: 0.5em;
-	border: 3px solid #fff;
+	padding: 0.3em;
 	font-family: 'Fredoka One';
 	text-align: center;
 
@@ -20,11 +19,11 @@ p.menu span {
 	-webkit-border-radius: 15px;
 }
 
-p.menu a {
+div.menu a {
 	text-decoration: none;
 }
 
-p.menu span.active {
+div.menu span.active {
 	background: #6d6;
 	color: #000;
 }

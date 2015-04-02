@@ -34,7 +34,7 @@ label {
 }
 
 div.options {
-	padding-left: 0.5em;
+	padding-left: 76%;
 	padding-right: 0.5em;
 }
 
@@ -44,7 +44,6 @@ div.columns {
 }
 
 form, select {
-	width: 99%;
 }
 
 span {

@@ -1662,13 +1662,6 @@ function init_map()
 
 function main()
 {
-	$('body').layout({
-		east__size: 400,
-		east__minSize: 250,
-		north__resizable: false,
-		north__closable: false,
-		center__onresize: function() { map.updateSize(); }
-	});
 	init_map();
 	init_options();
 	init_events();
