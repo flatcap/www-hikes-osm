@@ -42,8 +42,6 @@ var uk_hull;
 var route_info;
 var item_info;
 
-var mouse_mode = 0;		// 1: click, 2: hover
-
 //------------------------------------------------------------------------------
 
 var container = document.getElementById ('popup');
@@ -1012,7 +1010,7 @@ function get_feature_text (feature, layer)
 }
 
 
-function set_popup (evt)
+function set_popup (evt, force)
 {
 	if (!evt) {
 		overlay.setPosition (undefined);
@@ -1023,15 +1021,22 @@ function set_popup (evt)
 	var pixel = map.getEventPixel (evt);
 	var lonlat = map.getCoordinateFromPixel (pixel);
 
-	var text;
-	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
-		text = get_feature_text (feature, layer);
-		return true;
-	});
-
 	var ll = ol.proj.transform (lonlat, 'EPSG:3857', 'EPSG:4326');
 	var llstr = ll[0].toFixed(6) + ', ' + ll[1].toFixed(6);
 	$('#ll').html (llstr);
+
+	var text;
+	var feature_match;
+	map.forEachFeatureAtPixel (pixel, function (feature, layer) {
+		text = get_feature_text (feature, layer);
+		feature_match = feature;
+		return true;
+	});
+
+	var type = feature_match && feature_match.get ('type');
+	if ((type == 'area') && (!force)) {
+		text = undefined;
+	}
 
 	if (text) {
 		content.innerHTML = text;
@@ -1045,22 +1050,14 @@ function set_popup (evt)
 
 function on_map_click (evt)
 {
-	if (mouse_mode == 2) {	// hover
-		return;
-	}
-	mouse_mode = 1;		// click
-
-	set_popup (evt.originalEvent);
+	var force = true;
+	set_popup (evt.originalEvent, force);
 }
 
 function on_mouse_move (evt)
 {
-	if (mouse_mode == 1) {	// click
-		return;
-	}
-	mouse_mode = 2;		// hover
-
-	set_popup (evt);
+	var force = false;
+	set_popup (evt, force);
 }
 
 function on_window_resize()
