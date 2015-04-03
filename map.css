@@ -1,5 +1,10 @@
 
 .map {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+
 	background-color: gray;
 	height: 100%;
 	width: 75%;
@@ -7,7 +12,11 @@
 }
 
 .ol-rotate {
-	margin-top: 2em;
+	margin-top: 2.1em;
+}
+
+.ol-zoom {
+	margin-top: 3em;
 }
 
 .map:-moz-full-screen {

@@ -1,8 +1,12 @@
 div.menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+
 	margin: 0;
 	padding: 0.7em;
-	z-index: 10;
-	background: #fff;
+	background: transparent;
 }
 
 div.menu span {
