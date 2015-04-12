@@ -906,7 +906,7 @@ function get_info_rich (feature, layer)
 	var x = feature.getStyle() || layer.getStyle();
 	var y = x.getImage();
 	var z = y.getSrc();
-	var s = y.getSize();
+	var s = y.getSize() || [ 32, 32];
 
 	output += '<div class="format">';
 	output += '<div style="' +
@@ -1224,6 +1224,9 @@ function load_rich_data()
 		var l = layers.icon_rich;
 		var s = l.getSource();
 		s.addFeature(f);
+
+		// Pre-load Rich's info
+		item_info.html (get_info_rich (f, l));
 
 		load_estimate_data(f);
 	})
